@@ -1,10 +1,20 @@
-<div class="center hero-unit">
+<% if signed_in? %>
+  <div class="row">
+    <aside class="span4">
+      <section>
+        <%= render 'shared/user_info' %>
+      </section>
+    </aside>
+  </div>  
+<% else %>
+  <div class="center hero-unit">
     <h3>Welcome</h3>
 
     <h2>
-      This is the home page for the awesome budget app!
+      This is the home page for the budget app.
     </h2>
 
-    <%= link_to "Sign up now!", '#',
+    <%= link_to "Sign up now!", signup_path,
                                 class: "btn btn-large btn-primary" %>
-</div>
+  </div>
+<% end %>
