@@ -11,7 +11,18 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140301023144) do
+ActiveRecord::Schema.define(version: 20140303215357) do
+
+  create_table "budgets", force: true do |t|
+    t.string   "name"
+    t.string   "description"
+    t.decimal  "allowance"
+    t.decimal  "target"
+    t.datetime "start_date"
+    t.datetime "end_date"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "users", force: true do |t|
     t.string   "name"
@@ -21,6 +32,7 @@ ActiveRecord::Schema.define(version: 20140301023144) do
     t.string   "password_digest"
     t.string   "remember_token"
     t.boolean  "admin",           default: false
+    t.integer  "budget_id"
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true
