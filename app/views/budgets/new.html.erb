@@ -4,18 +4,16 @@
 <div class="row">
   <div class="span6 offset3">
     <%= form_for(@budget) do |f| %>
-    <%= render 'shared/error_messages', object: f.object %>
+      <%= render 'shared/error_messages', object: f.object %>                
 
-      <%= f.label :name %>
-      <%= f.text_field :name %>
+      <%= render "#{@budget.current_step}_step", :f => f %>
 
-      <%= f.label :description %>
-      <%= f.text_field :description %>
-
-      <%= f.label :allowance %>
-      <%= f.text_field :allowance %>
-
-      <%= f.submit "Next", class: "btn btn-large btn-primary" %>
+      <%= f.submit "Back", name: "back_button", class: "btn btn-primary" unless @budget.first_step? %>
+      <% if @budget.last_step? %>
+        <%= f.submit "Save", class: "btn btn-primary" %> 
+      <% else %>
+        <%= f.submit "Next", class: "btn btn-primary" %>      
+      <% end %>
     <% end %>
   </div>
 </div>

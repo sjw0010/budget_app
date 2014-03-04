@@ -19,7 +19,6 @@ ActiveRecord::Schema.define(version: 20140303215357) do
     t.decimal  "allowance"
     t.decimal  "target"
     t.datetime "start_date"
-    t.datetime "end_date"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

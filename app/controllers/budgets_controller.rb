@@ -5,19 +5,45 @@ class BudgetsController < ApplicationController
   end
 
   def new    
-    @budget = Budget.new
+    session[:budget_params] ||= {}
+    @budget = Budget.new(session[:budget_params])
+    @budget.current_step = session[:budget_step]
   end
 
   def create
-    @budget = Budget.new(budget_params)
-    if(@budget.save)
-      flash[:success] = "Save success!"
-      current_user.budget_id = @budget.id
-      current_user.save
-      redirect_to current_user
-    else
+    session[:budget_params].deep_merge!(params[:budget]) if params[:budget]
+    @budget = Budget.new(session[:budget_params])
+    @budget.current_step = session[:budget_step]
+    if @budget.valid?
+      if params[:back_button]
+        @budget.previous_step
+      elsif @budget.last_step? 
+        if current_user.nil?
+        else       
+          @budget.save
+          current_user.update_attribute(:budget_id, @budget.id)          
+        end
+      else
+        @budget.next_step
+      end
+      session[:budget_step] = @budget.current_step
+    end
+    if @budget.new_record?
       render 'new'
-    end     
+    else
+      session[:budget_step] = session[:budget_params] = nil
+      flash[:success] = "Budget created!"
+      redirect_to root_url
+    end        
+
+    #if(@budget.save)
+     # flash[:success] = "Save success!"
+      #current_user.budget_id = @budget.id
+      #current_user.save
+     #redirect_to root_url
+    #else
+     # render 'new'
+    #end     
   end
 
   def show
