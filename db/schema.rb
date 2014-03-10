@@ -18,7 +18,7 @@ ActiveRecord::Schema.define(version: 20140303215357) do
     t.string   "description"
     t.decimal  "allowance"
     t.decimal  "target"
-    t.datetime "start_date"
+    t.date     "start_date"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

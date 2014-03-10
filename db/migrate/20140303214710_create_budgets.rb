@@ -5,7 +5,7 @@ class CreateBudgets < ActiveRecord::Migration
       t.string :description
       t.decimal :allowance
       t.decimal :target
-      t.datetime :start_date
+      t.date :start_date
 
       t.timestamps
     end

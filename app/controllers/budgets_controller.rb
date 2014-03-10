@@ -18,8 +18,7 @@ class BudgetsController < ApplicationController
       if params[:back_button]
         @budget.previous_step
       elsif @budget.last_step? 
-        if current_user.nil?
-        else       
+        if current_user.nil? == false      
           @budget.save
           current_user.update_attribute(:budget_id, @budget.id)          
         end
@@ -34,16 +33,7 @@ class BudgetsController < ApplicationController
       session[:budget_step] = session[:budget_params] = nil
       flash[:success] = "Budget created!"
       redirect_to root_url
-    end        
-
-    #if(@budget.save)
-     # flash[:success] = "Save success!"
-      #current_user.budget_id = @budget.id
-      #current_user.save
-     #redirect_to root_url
-    #else
-     # render 'new'
-    #end     
+    end  
   end
 
   def show
@@ -53,6 +43,6 @@ class BudgetsController < ApplicationController
   private
 
     def budget_params
-      params.require(:budget).permit(:name, :description, :allowance)
+      params.require(:budget).permit(:name, :description, :allowance, :start_date)
     end
 end
